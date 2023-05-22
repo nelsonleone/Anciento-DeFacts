@@ -1,0 +1,85 @@
+<% const [localPart, domainPart] = factDetails.contributor.email.split('@')
+   const hiddenLocalPart = localPart.replace(/(?<=.{5})./g, '*')
+   const hiddenEmail = `${hiddenLocalPart}@${domainPart}`
+   const options = { day: 'numeric', month: 'long', year: 'numeric' }
+   const createdAt = new Date(comment.createdAt).toLocaleString('en-US', options)
+%>
+
+<section class="details-page">
+   <main>
+     <h2><%= factDetails.title %></h2>
+      <div class="details-image-container">
+         <img src="<%= factDetails.repImageSrcPath %>" alt="<%= factDetails.repImageAlt || "fact image" %>" />
+      </div>
+
+      <div class="flex-row details-body">
+         <p><%= factDetails.body %></p>
+         <%- include('../partials/contributor-details.ejs', { factDetails: factDetails }) %>
+         
+         <div class="fact-credits">
+            <% if(factDetails.credits.length){ %>
+               <h4>Discovered By:</h4>
+            <% } %>
+            <% factDetails.credits.length && factDetails.credits.forEach(credit => { %>
+               <span><%= credit %></span>
+               <br/>
+            <% }) %>
+         </div>
+
+         <div class="interaction-details">
+            <button 
+               class="<%= factDetails.likes.includes(userDetails.id) ? "liked like-fact-btn" : "not-liked like-fact-btn" %>" 
+               title="Interact" 
+               id="<%= factDetails._id %>" 
+               data-userid="<%= userDetails.id %>" 
+               >
+               <span class="AT_only">Like</span>
+               <span aria-label="Fact Likes Count" id="fact-likes-count"><%= factDetails.likes.length %></span>
+               <i class="fa-solid fa-heart"></i>
+            </button>
+            <div>
+               <span id="fact-comments-count" aria-label="Fact Comment Count"><%= factDetails.comments.length %></span>
+               <i aria-label="Comments" class="fa-solid fa-comment"></i>
+
+               <div>
+                  <form id="<%= factDetails._id %>" data-userid="<%= userDetails.id %>" class="comment-form">
+                     <textarea name="addComment" id="addComment" placeholder="Write a comment"></textarea>
+                     <button type="submit">Comment</button>
+                  </form>
+
+                  <div id="comments-container">
+                     <% factDetails.comments.forEach(comment => { %>
+                        <div class="comment" key="<%= comment._id %>">
+                           <div>
+                              <div>
+                                 <img src="<%= comment.commentedBy.photoURL %>" alt="commentor's image" />
+                                 <span aria-label="Fact Writer's Name"><%= comment.commentedBy.name %></span>
+                              </div>
+                              <span aria-label="Fact Writer Email"><%= hiddenEmail %></span>
+                           </div>
+                           <p><%= comment.comment %></p>
+                        </div>
+                     <% }) %>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+  </main>
+
+  <aside>
+    <h3>You May Also Want To Read</h3>
+    <div class="suggested-facts-container">
+      <% suggestedFacts.forEach(fact => { %>
+         <% if(fact._id !== factDetails._id) { %>
+            <div class="suggested-fact">
+               <h4><%= fact.title %></h4>
+               <p><%= fact.body.slice(0,100) %>....</p>
+               <a href="/facts/factDetails/<%= fact._id %>">Read</a>
+               <p style="text-transform: uppercase;"><%= new Date(comment.createdAt).toLocaleString('en-US', options) %></p>
+            </div>
+         <% } %>
+      <% }) %>
+    </div>
+  </aside>
+</section>

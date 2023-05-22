@@ -1,0 +1,292 @@
+header{
+   display: flex;
+   justify-content: space-between;
+   background-color: hsl(0, 0%, 0%);
+   color: hsl(0, 0%, 100%);
+   height:4em;
+   z-index:10;
+   padding:1em;  
+   align-items:center;
+}
+
+@keyframes slideIn {
+   from {opacity:0};
+   to   {opacity:1};
+}
+
+header nav{
+  position:fixed;
+  background-color: hsl(0, 0%, 100%);
+  width:43%;
+  overflow:hidden;
+  right:0;
+  top:0;
+  min-height:40vh;
+  border-top-left-radius:10px;
+  border-bottom-left-radius:10px;
+  backdrop-filter: brightness(60%);
+  box-shadow: 0 4px 4px 3px rgba(0, 0, 0, 0.418);
+  z-index:100;
+  padding:1em;
+  animation-name: slideIn;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+  animation-duration:.5s;
+  display:none;
+}
+
+header nav ul{
+   margin-block:3em;
+}
+
+header nav ul li{
+   margin-block:1.5em;
+   word-break: break-all;
+   font-size: 1rem;
+}
+
+
+header a{
+   color: black;
+}
+
+.auth-link {
+   color: hsl(180, 75%, 32%);
+   font-size:.95rem;
+}
+
+
+h1{
+ font-size:1.3rem;
+ text-transform:uppercase;
+ color: hsl(0, 5%, 87%);
+ line-height:27px;
+ font-family: 'Kelly Slab', cursive;
+}
+
+.open-nav-btn{
+   z-index:101;
+   position:relative;
+   width:2em;
+}
+
+.open-nav-btn img{
+   width:100%;
+   aspect-ratio:1/.8;
+}
+
+
+.profile-icon{
+   font-size:1.2rem;
+   color:  hsl(180, 75%, 32%);
+   border-radius:50%;
+   aspect-ratio:1/1;
+}
+
+.profile-icon:focus{
+   border:2px dotted silver;
+}
+
+
+.profile-menu li{
+  color:  hsl(180, 75%, 32%);
+}
+
+.profile-menu li:nth-child(3){
+   font: size 0.9em;
+   text-decoration: underline;
+}
+
+.profile-menu img{
+   width:3em;
+   aspect-ratio: 1/1;
+   border-radius:50%;
+}
+
+.signout-btn{
+   color:rgb(146, 11, 11);
+   font-size:.9rem;
+   font-weight:700;
+   text-transform:uppercase;
+}
+
+
+
+/* Homepage Section Styling */
+
+.homepage{
+   z-index:1;
+   color: hsl(0, 0%, 100%);
+   padding:1em;
+   min-height:100vh;
+}
+
+.homepage main{
+   display:flex;
+   justify-content:center;
+   align-items:center;
+   flex-direction: column;
+   margin-top:1em;
+}
+
+.homepage a{
+  color: rgb(255, 255, 255);
+  position:relative;
+  text-align:center;
+  z-index:1;
+}
+
+.homepage a::after{
+   content:"";
+   width:90%;
+   position:absolute;
+   height: 3px;
+   display:block;
+   margin-inline:auto;
+   left:0;
+   right:0;
+   z-index:-1;
+   bottom:3px;
+   background: rgb(223, 8, 8);
+   border-radius:10px;
+}
+
+.homepage::before{
+   content:"";
+   width:100%;
+   height:100%;
+   position:fixed;
+   background-image: linear-gradient(to right,rgba(24, 26, 25, 0.829),rgba(20, 20, 20, 0.712)),url('/images/body-bg.jpg');
+   background-size: cover;
+   background-position: center;
+   background-repeat: no-repeat;
+   top:0;
+   left:0;
+   bottom:0;
+   right:0;
+   z-index:-1;
+   margin:auto;
+}
+
+.homepage p{
+   margin-block:1em !important;
+}
+
+.homepage h2{
+   font-size:1.7rem;
+}
+
+.links-container{
+   margin-top:2em;
+   display:flex;
+   justify-content: space-between;
+   flex-direction: row;
+   align-items: center;
+   gap:.7em;
+}
+
+.illustration-image-container{
+   margin-top:5em;
+}
+.illustration-image-container img{
+   border-radius:10px;
+   width:16em;
+   float: right;
+}
+
+
+
+
+
+
+/* Footer section styling */
+footer{
+   z-index:2;
+   background-color:hsl(0, 0%, 0%);
+   color: hsl(0, 0%, 100%);
+   padding:.5em 1em;
+   height:11em;
+}
+
+footer nav,footer p{
+   margin-block:.7em;
+}
+
+footer p {
+   font-size:.9rem;
+}
+
+footer p + p{
+   text-transform: uppercase;
+   color:hsl(0, 83%, 39%);
+   font-size:.88rem;
+}
+
+footer span{
+   font-size:.85rem;
+}
+
+footer li {
+   display:inline-block;
+   margin-right:1em;
+}
+
+footer a {
+   color: cyan;
+}
+
+
+
+
+
+
+
+
+/* MEDIA QUERIES */
+
+@media (min-width:60rem){
+
+  header nav {
+    width:17%;
+  }
+
+  .homepage main{
+    flex-direction:  row;
+    align-items:  center;
+    justify-content: space-between;
+    margin-top: 0;
+  }
+
+  .homepage h2{
+   font-size: 3rem;
+   width:90%;
+  }
+
+
+  .homepage main > div:first-of-type{
+    width: 40%;
+  }
+
+  .illustration-image-container {
+     width: 45%;
+     display:block;
+  }
+
+  .links-container{
+      text-align: left;
+      display:flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 3em;
+   }
+
+   .illustration-image-container{
+      height:27em;
+   }
+
+   .illustration-image-container img{
+      width: 100%;
+      height:100%;
+   }
+
+}

@@ -1,0 +1,266 @@
+.details-image-container img{
+   width:100%;
+   height:24em;
+   position: relative;
+   border-radius: 10px;
+}
+
+.details-page h2{
+   font-size: 1.4rem;
+   margin-block:1em .4em;
+   font-weight:600;
+   text-transform: capitalize;
+}
+
+.details-page aside {
+   display:none;
+}
+
+.details-body p{
+   margin-block:1em;
+   line-height:25px;
+}
+
+.details-body p{
+   font-family: 'Fira Sans', sans-serif;
+}
+
+.fact-credits{
+   margin-block:.5em;
+}
+
+
+
+.fact-credits span{
+   font-size:.95rem;
+   text-transform: capitalize;
+}
+
+.details-page textarea{
+   font-size:1rem;
+   max-width:100%;
+   max-height:3.5em;
+   overflow:auto;
+   font-family:inherit !important;
+   resize: none;
+}
+
+.details-page textarea:focus{
+   border:1px dotted black;
+}
+
+.details-page textarea::placeholder{
+   font-family: inheirt;
+}
+
+.details-page form{
+   position:relative;
+}
+
+.details-page form button{
+   width: 50%;
+   color: white;
+   background: hsl(180, 91%, 21%);
+   padding: 0.8rem;
+   border-radius:5px;
+   transform: translateX(50%);
+   margin-top:1em;
+   display:block;
+   transition:.3s ease-in-out;
+}
+
+.details-page form button:hover,
+.details-page form button:focus{
+   border: 2px solid  hsl(180, 91%, 21%);
+   background: transparent;
+   color: hsl(180, 91%, 21%);
+}
+
+
+
+/* interaction section */
+.interaction-details {
+   margin-top:.3em;
+   position: relative;
+}
+
+.details-page fa,
+.details-page .interaction-details span{
+   font-size:1.1rem;
+}
+
+.like-fact-btn{
+   font-size:1rem;
+   margin-block:.3em;
+   position: absolute;
+   top:-.2em;
+   left:8em;
+}
+
+.details-page .fa-comment {
+   pointer-events: none;
+   color: hsl(180, 9%, 60%);
+}
+
+.liked{
+   color:  hsl(51, 100%, 50%);
+}
+.not-liked{
+   color: hsl(55, 31%, 78%);
+}
+
+.interaction-details span{
+   color: hsl(180, 84%, 18%);
+}
+
+
+
+/* comments */
+.details-page  .comment span{
+  font-size:.85rem;
+}
+
+.comment p{
+   margin-block:.4em;
+   font-size:.9rem;
+}
+
+.comment{
+   margin-bottom:1em;
+   padding-bottom:.4em;
+   border-bottom:1px solid hsla(0, 11%, 91%, 0.664);
+   border-left:1px solid hsla(0, 11%, 91%, 0.664);
+   padding:.3em;
+}
+
+.comment > div{
+   display:flex;
+   justify-content:space-between;
+   align-items: center;
+}
+
+.comment img{
+   width:3em;
+   border-radius: 50%;
+   aspect-ratio: 1/1;
+   margin-right:.3em;
+}
+
+
+
+
+
+/* MEDIA QUERIES */
+
+@media (min-width:40rem){
+
+   .details-page h2{
+      font-size:1.8rem;
+   }
+
+   .details-page textarea{
+      margin-block:1.5em 1em;
+      width:60%
+   }
+
+   .details-page form {
+      display:flex;
+      justify-content: space-between;
+      align-items: flex-end;
+   }
+   .details-page form button{
+      width:25% !important;
+      margin-top: 0;
+      transform:unset;
+      height:3.5em;
+   }
+   .fact-credits{
+      margin-block:1em;
+   }
+}
+
+
+@media (min-width:60rem){
+   .details-page{
+      display: flex;
+      flex-direction: row;
+      gap:5%;
+      margin-block:3.5em 2em;
+   }
+
+   .details-page main{
+      width:65%;
+   }
+
+   .details-image-container img{
+      height:30em;
+      width:100%;
+      position:relative;
+   }
+
+   .details-page h2{
+      margin-top:0;
+   }
+
+   .details-page aside {
+      width:30%;
+      display:block;
+      padding:1em;
+      margin-top:1em;
+      background-color: rgba(0, 0, 0, 0.856);
+      border-left: 1px solid hsla(0, 12%, 90%, 0.822);
+      color: #FAFAFA;
+   }
+
+   .details-page aside h3{
+      font-size:1.6rem;
+      text-transform: uppercase;
+      display: inline-block;
+      position: relative;
+      z-index: 1;
+   }
+
+   .details-page aside h3::before{
+      content: "";
+      width: 98%;
+      margin-inline: auto;
+      height:3px;
+      position: absolute;
+      bottom:.3em;
+      background-color: hsl(189, 89%, 37%);
+      display:block;
+      z-index:-1;
+   }
+
+   .details-page aside .suggested-fact{
+      margin-block:3em;
+   }
+
+   .suggested-fact h4{
+      font-size:1.5rem;
+      text-transform: capitalize;
+      margin-block:.4em;
+   }
+
+   .suggested-fact p{
+      font-size:.9rem;
+      line-height: 25px;
+   }
+
+   .suggested-fact a{
+      color: hsl(180, 87%, 41%);
+      display:inline-block;
+      margin-top:1em;
+      font-weight:600;
+   }
+
+   .interaction-details i {
+      font-size:1.6rem;
+   }
+
+   .fact-credits span{
+      margin-block:.3em;
+      display:inline-block;
+   }
+
+}

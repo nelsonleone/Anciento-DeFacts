@@ -1,0 +1,14 @@
+<% const [localPart, domainPart] = factDetails.contributor.email.split('@');
+   const hiddenLocalPart = localPart.replace(/(?<=.{5})./g, '*');
+   const hiddenEmail = `${hiddenLocalPart}@${domainPart}`;
+%>
+
+<div class="fact-contributor-details">
+   <p aria-label="Fact Writer Name">
+      <%= factDetails.contributor.name === userDetails.name ? "You" : factDetails.contributor.name %>
+   </p>
+
+   <% if (factDetails.contributor.email === userDetails.email) { %>
+      <p aria-label="Fact Writer Email"><%= hiddenEmail %></p>
+   <% } %>
+</div>

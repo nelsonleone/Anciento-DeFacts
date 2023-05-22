@@ -1,0 +1,53 @@
+<% const options = { day: 'numeric', month: 'long', year: 'numeric' }
+   const createdAt = new Date(comment.createdAt).toLocaleString('en-US', options)
+%>
+
+<section class="facts-page">
+   <h2>Facts</h2>
+   
+   <div class="search-input-container">
+      <span id="search-label" class="AT_only">Search For A Fact Using A Contributor's email or name</span>
+      <input class="search-facts" name="facts-search" aria-label="search-label" type="text" placeholder="Search" />
+   </div>
+
+   <main>
+      <% if (facts.length > 0) { %>
+         <% facts.forEach(fact => { %>
+            <div class="fact" tabindex="0" aria-label="Fact" aria-labelledby="<%= fact._id %>">
+               
+               <%- include('../partials/contributor-details.ejs', { factDetails: fact }) %>
+
+               <div class="fact-image-container">
+                  <img src="<%= fact.repImageSrcPath %>" alt="<%= fact.repImageAlt %>" />
+               </div>
+
+               <div>
+                  <h3 id="<%= fact._id %>"><%= fact.title %></h3>
+                  <p class="fact-body"><%= fact.body.slice(0,100) %>.....</p>
+               </div>
+
+               <div class="interaction-contents">
+                  <div>
+                     <span aria-label="fact likes"><%= fact.likes.length || 0 %></span>
+                     <i class="fa-solid fa-heart"></i>
+                  </div>
+                  <div>
+                     <span aria-label="Fact Comment Count"><%= fact.comments.length || 0 %></span>
+                     <i aria-label="Comments" class="fa-solid fa-comment"></i>
+                  </div>
+               </div>
+
+               <a href="/facts/factDetails/<%= fact._id %>" class="view-full-details">
+                  <i class="fa-solid fa-eye" style="color: #12a8a6;"></i>
+               </a>
+               <p><%= new Date(comment.createdAt).toLocaleString('en-US', options) %></p>
+            </div>
+         <% }) %>
+      <% } else { %>
+         <h4>There are no Facts to view now...
+            <br/>
+            Check your network connection and try again 
+         </h4>
+      <% } %>
+   </main>
+</section>

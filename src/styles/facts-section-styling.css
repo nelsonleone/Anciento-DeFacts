@@ -1,0 +1,290 @@
+.new-fact-section{
+   color: hsl(0, 0%, 100%);
+   background-color: rgb(25, 58, 71);
+   padding:1em;
+}
+
+.facts-page h2{
+   font-family: 'Fira Sans', sans-serif;
+   text-transform:uppercase;
+   font-size: clamp(1.375rem, 0.563vw + 1.265rem, 1.75rem);
+   margin-top:2em;
+   display:inline-block;
+   position:relative;
+   z-index:1;
+   text-transform: capitalize;
+}
+
+.facts-page h2::before{
+   content:"";
+   width:100%;
+   height:3px;
+   background-color: hsl(180, 83%, 43%);
+   display:block;
+   border-radius:10px;
+   position:absolute;
+   bottom:5px;
+   z-index:-1;
+}
+
+.facts-page h4{
+   text-transform: capitalize;
+   color: hsl(180, 82%, 26%);
+   font-size:1.2rem;
+   margin-block:3em;
+}
+
+form div{
+   margin-block:2em;
+}
+
+form div > * {
+   font-family: 'Fira Sans', sans-serif;
+}
+
+label > span{
+   font-size:.9rem;
+   color: cyan;
+}
+
+label{
+   border-bottom:1px dotted cyan;
+   padding-bottom:.2em;
+   display:inline-block;
+}
+
+textarea,
+input[type="text"]{
+   display:block;
+   margin-block:.4em;
+   border: 1px solid hsl(0, 2%, 68%);
+   padding:1em;
+   background-color: #f1eded;
+   width:90%;
+}
+
+input[type="text"],
+textarea[name="credits"]{
+   height:3em;
+   max-height: 5em;
+   border-radius:4px;
+}
+
+textarea[name="credits"]{
+   max-height:3em;
+}
+
+
+.filepond{
+   width: 90%;
+}
+
+textarea{
+   overflow:auto !important;
+   border-radius:7px;
+   max-width:90%;
+   height:  15em;
+   max-height:18em;
+}
+textarea[name="repImageAltText"]{
+   height:5em;
+}
+
+.new-fact-section form button{
+   width:30%;
+   display:block;
+   margin:1em auto 2em;
+   padding:.6em;
+   color:white;
+   transition:.3s ease-in-out;
+   background: hsl(180, 91%, 21%);
+   border-radius:3px;
+}
+
+.new-fact-section form button:hover,
+.new-fact-section form button:focus{
+   border: 2px solid  hsl(180, 91%, 21%);
+   opacity: .6;
+}
+
+
+
+
+/* facts main page styling */
+
+
+/* SEARCH INPUT */
+.search-input-container .search-facts {
+   background: hsl(0, 23%, 97%);
+   font-family: 'Fira Sans', sans-serif;
+   border: 2px solid hsla(189, 93%, 28%, 0.699);
+}
+
+.search-facts:focus{
+   border: 1px solid rgb(14, 97, 97);
+}
+
+
+
+
+
+/* INDIVIDUAL FACTS PREVIEW */
+
+.fact{
+   margin-block:3em;
+   position:relative;
+   border-bottom:1px solid rgb(233, 229, 229);
+   padding-bottom:1em;
+}
+
+.fact-contributor-details{
+   display:flex;
+   justify-content:space-between;
+   align-items:center;
+   margin-block:.4em;
+}
+
+.fact-contributor-details p{
+   color: hsl(180, 82%, 22%);
+   font-size:.9rem;
+   font-weight:600;
+}
+
+.fact-contributor-details p:first-of-type{
+   text-transform: uppercase;
+}
+
+.fact img{
+   width: 100%;
+   height:15em;
+   display:block;
+   object-fit:cover !important;
+   border-radius:6px;
+}
+
+.fact h3{
+   margin-block:.5em;
+   border-bottom:1px dotted hsl(180, 82%, 22%);
+   display:inline-block;
+}
+
+
+.fact .fact-body{
+   line-height:25px;
+   color:hsl(240, 16%, 15%);
+   margin-block:1em;
+}
+
+
+
+.view-full-details{
+   font-size: 2.8rem;
+   display:block;
+   margin:.2em;
+   text-align:center;
+   position:absolute;
+   width:70%;
+   bottom:1em;
+   right:0;
+   left:0;
+   margin-inline: auto;
+   transition:.3s linear;
+}
+
+.view-full-details:hover{
+   scale:1.1;
+}
+
+.interaction-contents{
+   display:flex;
+   gap:2em;
+   align-items:center;
+}
+
+.interaction-contents i,
+.interaction-contents span{
+ font-size:1rem;
+}
+
+.interaction-contents .fa-heart{
+   color: hsl(51, 100%, 50%);
+}
+
+.interaction-contents .fa-comment{
+   color: rgb(219, 235, 235);
+}
+
+
+
+
+
+
+
+/* MEDIA QUERIES */
+
+@media (min-width:40rem){
+   .search-input-container{
+      width:30em;
+      margin-block:1.3em;
+   }
+   .facts-page main{
+      display: grid;
+      grid-template-columns: repeat(2,48%);
+      gap:4%;
+      justify-items: space-between;
+      align-items: center;
+   }  
+}
+
+
+@media (min-width:50rem){
+
+   .new-fact-section {
+      display: flex;
+      justify-content: center;
+   }
+
+   textarea,
+   input[type="text"]{
+      width:30em;
+   }
+   
+   textarea[name="factBody"]{
+      height:20em;
+      max-height:30em;
+      resize:vertical;
+      width: 40em;
+   }
+
+   .filepond{
+      width: 37em;
+      height: 18em;
+   }
+
+   .new-fact-section form button {
+      width:14em;
+      height:4em;
+      margin-inline: 0;
+   }
+
+   .search-input-container{
+      width:24em;
+   }
+   .facts-page main{
+      grid-template-columns: repeat(3,32%);
+      gap: 4%;
+   }
+
+   .fact{
+      margin-block:1em;
+   }
+
+   .view-full-details{
+      font-size:3.5rem;
+   }
+
+   .interaction-contents i,
+   .interaction-contents span{
+      font-size:1.2rem;
+   }
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="icon" href="/favicon.png" />
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;600&family=Kelly+Slab&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  
+   <link rel="stylesheet" href="/styles/index.css" />
+   <link rel="stylesheet" href="/styles/defaults.css" />
+   <link rel="stylesheet" href="/styles/auth-pages.css" />
+   <link rel="stylesheet" href="/styles/facts-section-styling.css" />
+   <link rel="stylesheet" href="/styles/details-page.css" />
+   <link rel="stylesheet" href="/styles/components.css" />
+
+   <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+   <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
+   
+   <script defer src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.js"></script>
+   <script defer src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+   <script defer src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
+   <script defer src="https://unpkg.com/filepond/dist/filepond.js"></script>
+   
+   <script defer src="/handleAuth.js" type="module"></script>
+   <script defer src="/script.js" type="module"></script>
+
+   <title><%= title ? title : "" %></title>
+</head>
+<body>
+   <%- include('../partials/_header.ejs') %>
+   <%- body %>
+   <div id="snackbarElement" data-snackbar="snackbar-container"></div>
+   <div id="loader" class="loader">
+      <img src="/images/loader.svg" alt="loading" />
+   </div>
+   <%- include('../partials/_footer.ejs') %>
+</body>
+</html>

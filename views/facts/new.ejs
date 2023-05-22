@@ -1,0 +1,30 @@
+<section class="new-fact-section">
+  <form action="/facts" method="POST">
+    <div>
+      <label for="fact-title">Fact Title</label>
+      <input type="text" name="title" id="fact-title" placeholder="Title" required="true" />
+    </div>
+
+    <div>
+      <label for="fact-body">Fact</label>
+      <textarea type="text" name="factBody" id="fact-body" placeholder="Fact" required="true"></textarea>
+    </div>
+
+    <div>
+      <label for="fact-credits">Credits <span>[comma separate]</span></label>
+      <textarea type="text" name="credits" id="fact-credits" placeholder="Source / Core founders"></textarea>
+    </div>
+
+    <div>
+      <label for="rep-image">Representation Image</label>
+      <input type="file" name="repImage" class="filepond" />
+    </div>
+
+    <div>
+      <label for="repImage-altText">Image Alt Text</label>
+      <textarea type="text" name="repImageAltText" id="repImage-altText" placeholder="Say something short about the image" ></textarea>
+    </div>
+
+    <button type="submit">Add Fact </button>
+  </form>
+</section>

@@ -1,0 +1,39 @@
+<header>
+   <a href="/"> <h1>Anciento-De'Facts</h1></a>
+   <nav id="main-nav">
+      <ul>
+         <li>
+            <a href="/facts">Facts</a>
+         </li>
+         <li>
+            <a href="/facts/new">Add A Fact</a>
+         </li>
+
+         <% if (!authenticated) { %>
+            <li>
+               <a href="/auth/signin" class="auth-link">Sign In</a>
+            </li>
+         <% } %>
+
+         <% if (!authenticated) { %>
+            <li>
+               <a href="/auth/signup" class="auth-link">Create An Account</a>
+            </li>
+         <% } %>
+
+         <% if(userDetails.email && userDetails.name){ %>
+            <div id="profile-menu" class="profile-menu">
+               <img src="<%= userDetails.photoURL || '/images/userIcon.png' %>" alt="user photo" />
+               <li><%= userDetails.name %></li>
+               <li><%= userDetails.email %></li>
+               <button id="signout-btn" class="signout-btn">Sign Out</a>
+            </div>
+         <% } %>
+                  
+      </ul>
+   </nav>
+   <button aria-controls="main-nav" class="open-nav-btn" aria-expanded="false">
+      <span class="AT_only">Open Nav</span>
+      <img src="/images/icon-hamburger.svg" class="toggleImage" alt="" aria-hidden="true" />
+   </button>
+</header>
