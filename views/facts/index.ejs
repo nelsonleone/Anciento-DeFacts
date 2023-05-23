@@ -1,6 +1,4 @@
-<% const options = { day: 'numeric', month: 'long', year: 'numeric' }
-   const createdAt = new Date(comment.createdAt).toLocaleString('en-US', options)
-%>
+<% const options = { day: 'numeric', month: 'long', year: 'numeric' } %>
 
 <section class="facts-page">
    <h2>Facts</h2>
@@ -40,13 +38,14 @@
                <a href="/facts/factDetails/<%= fact._id %>" class="view-full-details">
                   <i class="fa-solid fa-eye" style="color: #12a8a6;"></i>
                </a>
-               <p><%= new Date(comment.createdAt).toLocaleString('en-US', options) %></p>
+               <p class="createdAt"><%= new Date(fact.createdAt).toLocaleString('en-US', options) %></p>
             </div>
          <% }) %>
       <% } else { %>
          <h4>There are no Facts to view now...
             <br/>
-            Check your network connection and try again 
+            <br />
+            Check your network connection and try again or Make sure you are logged In
          </h4>
       <% } %>
    </main>

@@ -160,6 +160,11 @@ textarea[name="repImageAltText"]{
    display:block;
    object-fit:cover !important;
    border-radius:6px;
+   transition: .3s ease-in-out;
+}
+
+fact img:hover{
+   scale:1.05;
 }
 
 .fact h3{
@@ -168,6 +173,13 @@ textarea[name="repImageAltText"]{
    display:inline-block;
 }
 
+.createdAt{
+   text-transform: uppercase;
+   margin-top: 1em;
+   font-size: .85rem;
+   letter-spacing: 1px;
+   font-weight: 600;
+}
 
 .fact .fact-body{
    line-height:25px;
@@ -227,17 +239,21 @@ textarea[name="repImageAltText"]{
       width:30em;
       margin-block:1.3em;
    }
+
    .facts-page main{
       display: grid;
       grid-template-columns: repeat(2,48%);
-      gap:4%;
+      grid-template-rows: auto;
       justify-items: space-between;
-      align-items: center;
+      gap: 4%;
+      align-content: center;
+      margin-bottom: 2em;
    }  
 }
 
 
 @media (min-width:50rem){
+
 
    .new-fact-section {
       display: flex;
@@ -271,12 +287,11 @@ textarea[name="repImageAltText"]{
       width:24em;
    }
    .facts-page main{
-      grid-template-columns: repeat(3,32%);
-      gap: 4%;
+      grid-template-columns: repeat(3,30%);
    }
 
    .fact{
-      margin-block:1em;
+      margin-block:unset;
    }
 
    .view-full-details{

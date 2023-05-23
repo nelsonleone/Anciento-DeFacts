@@ -31,7 +31,7 @@
    font-size:.96rem;
    display:block;
    margin-block:3em;
-   background-color:hsl(180, 86%, 42%);
+   background-color:hsl(180, 89%, 28%);
    transition:.3s linear;
 }
 
@@ -52,7 +52,21 @@
 .auth-page div img{
    width:5em;
    display:block;
-   margin-inline:auto;
-   margin-top:1em;
    aspect-ratio:1/1;
+}
+
+
+@media (min-width:60rem){
+   .auth-page h2{
+      font-size: 2rem;
+   }
+
+   .auth-page p{
+      font-size:1.1rem;
+   }
+
+   .auth-page div{
+      justify-content: flex-start;
+      gap:1em;
+   }
 }

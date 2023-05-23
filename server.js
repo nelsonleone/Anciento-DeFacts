@@ -8,14 +8,11 @@ const path = require('path')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const initializedParser = bodyParser.urlencoded({ limit:'10mb',extended: false })
-const csrf = require('csrf')
-const csrfTokens = new csrf()
 
-
+const setCsrfToken = require('./middleware/setCsrfToken')
 const authRoutes = require('./controllers/routes/authRoutes')
 const factsRoutes = require('./controllers/routes/factsRoutes')
 const checkAuthSession = require('./middleware/checkAuthSession')
-const setCsrfToken = require('./middleware/setCsrfToken')
 
 const mongoose = require('mongoose')
 const expressLayouts = require('express-ejs-layouts')
@@ -45,12 +42,8 @@ app.use(bodyParser.json())
 app.use(expressLayouts)
 app.use(express.static('public'))
 app.use(express.static('src'))
+app.use(setCsrfToken)
 app.use(checkAuthSession)
-
-
-// csrf protection
-// app.use(setCsrfToken)
-// Routes
 
 
 // index route
@@ -60,5 +53,4 @@ app.get('/',(req,res) => {
 
 // other routes
 app.use('/auth',authRoutes)
-app.use('/facts',factsRoutes)
 app.use('/facts',factsRoutes)

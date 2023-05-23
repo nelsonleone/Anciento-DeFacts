@@ -166,7 +166,7 @@
    .details-page form {
       display:flex;
       justify-content: space-between;
-      align-items: flex-end;
+      align-items: center;
    }
    .details-page form button{
       width:25% !important;

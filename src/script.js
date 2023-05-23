@@ -13,6 +13,8 @@ export const snackbarElement = document.querySelector('[data-snackbar]')
 const commentForm = document.querySelector('.comment-form')
 const commentsContainer = document.getElementById('comments-container')
 export const loaderElement = document.getElementById('loader')
+export const signInhiddenInput = document.querySelector('.signin-hiddenInput')
+export const signUphiddenInput = document.querySelector('.signup-hiddenInput')
 
 
 

@@ -13,7 +13,7 @@ const { handleFactsLikes , handleComment  } = require('../handleFactInteractions
 
 router.get('/', async(req,res) => {
    const authSessionCookie = req.cookies.authSession || '';
-   const facts = await fetchFacts(authSessionCookie) 
+   const facts = await fetchFacts(authSessionCookie,50) 
    res.render('facts/index', { title: "Anciento De'Facts - Facts", facts })
 })
 

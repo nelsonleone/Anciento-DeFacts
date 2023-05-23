@@ -29,6 +29,7 @@ export async function postNewFact(formData){
 export async function interactWithFact(userId,factId){
 
   const loader = new Loader(loaderElement)
+  loader.load()
 
   try{
     const res = await fetch(`/facts/likeFact`,{
@@ -42,14 +43,20 @@ export async function interactWithFact(userId,factId){
       })
     })
 
-    loader.load()
     const resLikeCountFetch = await fetch(`/facts/likes?factId=${factId}`)
     const updatedLikesCount = await resLikeCountFetch.json()
-    renderUpdatedLikesCount(updatedLikesCount)
+    await renderUpdatedLikesCount(updatedLikesCount)
+
+    const snackbar = new Snackbar("Fact Liked",'error',snackbarElement)
+    snackbar.show()
+ 
+    setTimeout(() => {
+      snackbar.clear()
+    },3000)
   }
   
   catch(err){
-    const snackbar = new Snackbar(err.message,'error',snackbarElement)
+    const snackbar = new Snackbar("Error Liking Fact",'error',snackbarElement)
    snackbar.show()
 
    setTimeout(() => {
@@ -72,9 +79,9 @@ export async function commentOnFact(factId,userId,comment){
   
   let success = false;
   const loader = new Loader(loaderElement)
+  loader.load()
 
   try{
-    loader.load()
     const res = await fetch('/facts/comment',{
       method: 'POST',
       headers: {

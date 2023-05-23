@@ -6,29 +6,29 @@ const Fact = require('../models/Fact')
 const { getDecodedClaims } = require('../controllers/firebaseAdminInit')
 
 const getSignIn = (req,res) => {
-  res.render('auth/signin',{ title: "Anciento-De'Facts | SignIn" })
+  res.render('auth/signin',{ title: "Anciento-De'Facts | SignIn", csrfToken: req.cookies.csrfToken })
 }
 
 
 const getSignUp = async(req,res) => {
-  res.render('auth/signup',{ title: "Anciento-De'Facts | Create Account" })
+  res.render('auth/signup',{ title: "Anciento-De'Facts | Create Account", csrfToken: req.cookies.csrfToken })
 }
 
 
 const getSignOut = async(req,res) => {
   res.clearCookie('authSession')
+  res.clearCookie('csrfToken')
   res.redirect('/auth/signin')
 }
 
 async function handleCreateSessionCookie(req,res,next){
   const idToken = req.body.idToken?.toString()
-  // const csrfToken = req.body.csrfToken.toString()
+  const csrfToken = req.body.csrfToken?.toString()
 
-  // // Guard against CSRF attacks.
-  // if (csrfToken !== req.cookies.csrfToken) {
-  //   res.status(401).send('UNAUTHORIZED REQUEST!')
-  //   return;
-  // }
+  if (csrfToken !== req.cookies.csrfToken) {
+    res.status(401).send('UNAUTHORIZED REQUEST!')
+    return;
+  }
 
   try{
     const expiresIn = 60 * 60 * 24 * 3 * 1000;
@@ -51,7 +51,7 @@ async function handleCreateSessionCookie(req,res,next){
 
 const handleNewFactPost = async(req,res) => {
   if(!req.cookies.authSession){
-    res.status(401).send(`<h2>UNAUTHORIZED REQUEST, PLEASE LOGIN FIRST</h2>`)
+    res.status(401).send(`UNAUTHORIZED REQUEST, PLEASE LOGIN FIRST`)
     return;
   }
 
@@ -76,19 +76,25 @@ const handleNewFactPost = async(req,res) => {
     }
 
     fact.save()
+    res.locals.facts = await fetchFacts(authSessionCookie,3)
     res.redirect('/facts')
   }
 
   catch(err){
-    res.status(err.statusCode || 401).send(err.message)
+    if(err.message === 'UNAUTHORIZED REQUEST, PLEASE LOGIN FIRST'){
+      res.redirect('/auth/signup')
+    }
+    else{
+      res.status(err.statusCode || 401).send('Error Occured Processing Request')
+    }
   }
 }
 
 
-const fetchFacts = async (authSessionCookie) => {
+const fetchFacts = async (authSessionCookie,limit=10) => {
   try{
     const decodedClaims = await getDecodedClaims(authSessionCookie)
-    const fetchedFacts = await Fact.find().sort({ likes: -1 }).limit(10).populate('contributor comments.commentedBy')
+    const fetchedFacts = await Fact.find().sort({ likes: -1 }).limit(limit).populate('contributor comments.commentedBy')
     return fetchedFacts;
   }
 

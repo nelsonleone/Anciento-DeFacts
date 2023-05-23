@@ -1,16 +1,13 @@
-const csrf = require('csrf')
-const csrfTokens = new csrf()
+const crypto = require('crypto')
 
+function generateRandomToken(length = 32) {
+  return crypto.randomBytes(length).toString('hex')
+}
 
-function setCsrfToken(req,res,next){
-   const secret = csrfTokens.secretSync()
-   const token = csrfTokens.create(secret)
- 
-   res.cookie('csrfToken', token, { httpOnly: true, secure: true, sameSite: 'none' })
- 
-   req.csrfToken = token;
-   console.log(res.cookies,req.csrfToken) 
-   next()
+function setCsrfToken(req, res, next) {
+   const csrfToken = generateRandomToken(64)
+   res.cookie('csrfToken', csrfToken, { sameSite: 'none', secure: true })
+  next()
 }
 
 module.exports = setCsrfToken;

@@ -1,5 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+import { signInhiddenInput, signUphiddenInput } from './script.js';
 
 let auth;
 let app;
@@ -40,6 +41,15 @@ export async function signInWithGoogle(){
 
 
 async function postIdToken(idToken){
+
+  let csrfToken;
+  if(window.location.href === '/auth/signin'){
+    csrfToken = signInhiddenInput.value;
+  }
+  else if(window.location.href === '/auth/signup'){
+    csrfToken = signUphiddenInput.value
+  }
+
   try{
     await fetch('/auth',{
       method: 'POST',
@@ -47,7 +57,7 @@ async function postIdToken(idToken){
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ idToken })
+      body: JSON.stringify({ idToken , csrfToken})
     })
 
     window.location.href = "/"

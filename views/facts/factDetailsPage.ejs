@@ -2,7 +2,6 @@
    const hiddenLocalPart = localPart.replace(/(?<=.{5})./g, '*')
    const hiddenEmail = `${hiddenLocalPart}@${domainPart}`
    const options = { day: 'numeric', month: 'long', year: 'numeric' }
-   const createdAt = new Date(comment.createdAt).toLocaleString('en-US', options)
 %>
 
 <section class="details-page">
@@ -18,7 +17,7 @@
          
          <div class="fact-credits">
             <% if(factDetails.credits.length){ %>
-               <h4>Discovered By:</h4>
+               <h4>Credits :</h4>
             <% } %>
             <% factDetails.credits.length && factDetails.credits.forEach(credit => { %>
                <span><%= credit %></span>
@@ -71,15 +70,15 @@
     <h3>You May Also Want To Read</h3>
     <div class="suggested-facts-container">
       <% suggestedFacts.forEach(fact => { %>
-         <% if(fact._id !== factDetails._id) { %>
-            <div class="suggested-fact">
-               <h4><%= fact.title %></h4>
-               <p><%= fact.body.slice(0,100) %>....</p>
-               <a href="/facts/factDetails/<%= fact._id %>">Read</a>
-               <p style="text-transform: uppercase;"><%= new Date(comment.createdAt).toLocaleString('en-US', options) %></p>
-            </div>
+         <% if (fact._id.toString() !== factDetails._id.toString()) { %>
+           <div class="suggested-fact">
+             <h4><%= fact.title %></h4>
+             <p><%= fact.body.slice(0, 100) %>....</p>
+             <a href="/facts/factDetails/<%= fact._id %>">Read</a>
+             <p class="createdAt"><%= new Date(fact.createdAt).toLocaleString('en-US', options) %></p>
+           </div>
          <% } %>
-      <% }) %>
+       <% }) %>       
     </div>
   </aside>
 </section>
