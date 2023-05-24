@@ -59,7 +59,7 @@
                                  <img src="<%= comment.commentedBy.photoURL || '/images/userIcon.png' %>" alt="commentor's image" />
                                  <span aria-label="Fact Writer's Name"><%= comment.commentedBy.name %></span>
                               </div>
-                              <span aria-label="Fact Writer Email"><%= hideEmail(factDetails.commentedBy.email) %></span>
+                              <span aria-label="Fact Writer Email"><%= hideEmail(comment.commentedBy.email) %></span>
                            </div>
                            <p><%= comment.comment %></p>
                         </div>
