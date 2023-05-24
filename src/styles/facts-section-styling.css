@@ -61,6 +61,8 @@ input[type="text"]{
    padding:1em;
    background-color: #f1eded;
    width:90%;
+   font-size: 1rem;
+   line-height: 25px;
 }
 
 input[type="text"],

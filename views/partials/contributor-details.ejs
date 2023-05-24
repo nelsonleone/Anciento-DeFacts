@@ -1,6 +1,6 @@
-<% const [localPart, domainPart] = factDetails.contributor.email.split('@');
-   const hiddenLocalPart = localPart.replace(/(?<=.{5})./g, '*');
-   const hiddenEmail = `${hiddenLocalPart}@${domainPart}`;
+<% const [localPart, domainPart] = factDetails.contributor.email.split('@')
+   const hiddenLocalPart = localPart.replace(/(?<=.{5})./g, '*')
+   const hiddenEmail = `${hiddenLocalPart}@${domainPart}`
 %>
 
 <div class="fact-contributor-details">

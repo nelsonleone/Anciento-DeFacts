@@ -118,6 +118,13 @@
 /* comments */
 .details-page  .comment span{
   font-size:.85rem;
+  font-weight: 600;
+}
+
+.details-page .comment .flex-row{
+   display: flex;
+   align-items: center;
+   gap:1em;
 }
 
 .comment p{
@@ -143,7 +150,6 @@
    width:2em;
    border-radius: 50%;
    aspect-ratio: 1/1;
-   margin-right:.3em;
 }
 
 

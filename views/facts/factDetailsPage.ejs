@@ -1,6 +1,11 @@
-<% const [localPart, domainPart] = factDetails.contributor.email.split('@')
-   const hiddenLocalPart = localPart.replace(/(?<=.{5})./g, '*')
-   const hiddenEmail = `${hiddenLocalPart}@${domainPart}`
+<% 
+   function hideEmail(email){
+      const [localPart, domainPart] = email.split('@')
+      const hiddenLocalPart = localPart.replace(/(?<=.{5})./g, '*')
+      const hiddenEmail = `${hiddenLocalPart}@${domainPart}`
+
+      return hiddenEmail;
+   } 
    const options = { day: 'numeric', month: 'long', year: 'numeric' }
 %>
 
@@ -49,12 +54,12 @@
                   <div id="comments-container">
                      <% factDetails.comments.forEach(comment => { %>
                         <div class="comment" key="<%= comment._id %>">
-                           <div>
+                           <div class="flex-row">
                               <div>
-                                 <img src="<%= comment.commentedBy.photoURL %>" alt="commentor's image" />
+                                 <img src="<%= comment.commentedBy.photoURL || '/images/userIcon.png' %>" alt="commentor's image" />
                                  <span aria-label="Fact Writer's Name"><%= comment.commentedBy.name %></span>
                               </div>
-                              <span aria-label="Fact Writer Email"><%= hiddenEmail %></span>
+                              <span aria-label="Fact Writer Email"><%= hideEmail(factDetails.commentedBy.email) %></span>
                            </div>
                            <p><%= comment.comment %></p>
                         </div>
