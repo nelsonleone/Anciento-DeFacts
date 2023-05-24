@@ -5,8 +5,10 @@ function generateRandomToken(length = 32) {
 }
 
 function setCsrfToken(req, res, next) {
-   const csrfToken = generateRandomToken(64)
-   res.cookie('csrfToken', csrfToken, { sameSite: 'none', secure: true })
+  if(!req.cookies.csrfToken){
+    const csrfToken = generateRandomToken(64)
+    res.cookie('csrfToken', csrfToken, { sameSite: 'none', secure: true })
+  }
   next()
 }
 

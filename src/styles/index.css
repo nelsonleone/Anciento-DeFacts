@@ -249,6 +249,12 @@ footer a {
 
 
 /* MEDIA QUERIES */
+@media (min-width:40rem){
+   header nav{
+      width: 20%;
+   }
+}
+
 
 @media (min-width:60rem){
 

@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const getConfigData = (req,res,next) => {
    res.json({
       FIREBASE_API_KEY:process.env.FIREBASE_API_KEY,

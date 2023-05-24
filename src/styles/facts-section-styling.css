@@ -87,7 +87,7 @@ textarea{
    max-height:18em;
 }
 textarea[name="repImageAltText"]{
-   height:5em;
+   height:4em;
 }
 
 .new-fact-section form button{
@@ -118,6 +118,27 @@ textarea[name="repImageAltText"]{
    background: hsl(0, 23%, 97%);
    font-family: 'Fira Sans', sans-serif;
    border: 2px solid hsla(189, 93%, 28%, 0.699);
+}
+
+.search-facts-form{
+   display: flex;
+   gap:1em;
+   flex-direction: column;
+}
+
+.search-facts-form button {
+   background: hsl(189, 92%, 19%);
+   color: hsl(0, 0%, 100%);
+   width: 8em;
+   align-self: flex-end;
+   border-radius: 3px;
+   padding: .9em;
+}
+
+.search-facts-form button:hover,
+.search-facts-form button:focus {
+   opacity: .7;
+   border: 2px dotted black;
 }
 
 .search-facts:focus{
@@ -236,8 +257,16 @@ fact img:hover{
 
 @media (min-width:40rem){
    .search-input-container{
-      width:30em;
-      margin-block:1.3em;
+      width:40em;
+      margin-block:3em;
+   }
+
+   .search-facts-form {
+      flex-direction: row;
+   }
+
+   .search-facts-form button{
+      align-self: center;
    }
 
    .facts-page main{
@@ -248,7 +277,11 @@ fact img:hover{
       gap: 4%;
       align-content: center;
       margin-bottom: 2em;
-   }  
+   } 
+   
+   .view-full-details{
+      bottom: 2.5em;
+   }
 }
 
 
@@ -284,7 +317,7 @@ fact img:hover{
    }
 
    .search-input-container{
-      width:24em;
+      width:30em;
    }
    .facts-page main{
       grid-template-columns: repeat(3,30%);
@@ -296,6 +329,7 @@ fact img:hover{
 
    .view-full-details{
       font-size:3.5rem;
+      bottom:1.5em;
    }
 
    .interaction-contents i,

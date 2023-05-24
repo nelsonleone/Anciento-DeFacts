@@ -4,9 +4,9 @@ const {
    handleNewFactPost,
    renderDynamicRoutes, 
    getUpdatedComments, 
-   getMoreFacts, 
    fetchFacts,
-   getUpdatedLikesCount
+   getUpdatedLikesCount,
+   getSearchedFacts
 } = require('../setResponse')
 
 const { handleFactsLikes , handleComment  } = require('../handleFactInteractions')
@@ -21,9 +21,10 @@ router.get('/new',(req,res) => {
    res.render('facts/new', { title: "Anciento De'Facts - New Fact" })
 })
 
+router.get('/search',getSearchedFacts)
+
 router.post('/',handleNewFactPost)
 
-router.get('/getMoreFacts',getMoreFacts)
 router.get('/comments',getUpdatedComments)
 router.get('/likes',getUpdatedLikesCount)
 router.post('/likeFact',handleFactsLikes)

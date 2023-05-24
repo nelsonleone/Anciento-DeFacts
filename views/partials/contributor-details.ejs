@@ -5,10 +5,8 @@
 
 <div class="fact-contributor-details">
    <p aria-label="Fact Writer Name">
+      <input type="hidden" value="<%= userDetails.name %>" id="user-name" />
       <%= factDetails.contributor.name === userDetails.name ? "You" : factDetails.contributor.name %>
    </p>
-
-   <% if (factDetails.contributor.email === userDetails.email) { %>
-      <p aria-label="Fact Writer Email"><%= hiddenEmail %></p>
-   <% } %>
+   <p aria-label="Fact Writer Email"><%= hiddenEmail %></p>
 </div>

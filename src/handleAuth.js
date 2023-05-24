@@ -1,6 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
-import { signInhiddenInput, signUphiddenInput } from './script.js';
+import { signInhiddenInput, signUphiddenInput, snackbarElement} from './script.js';
+import { Snackbar } from './Snackbar.js';
 
 let auth;
 let app;
@@ -42,30 +43,36 @@ export async function signInWithGoogle(){
 
 async function postIdToken(idToken){
 
-  let csrfToken;
-  if(window.location.href === '/auth/signin'){
-    csrfToken = signInhiddenInput.value;
-  }
-  else if(window.location.href === '/auth/signup'){
-    csrfToken = signUphiddenInput.value
-  }
+  const csrfToken = signInhiddenInput?.value || signUphiddenInput?.value;
 
-  try{
-    await fetch('/auth',{
+  try {
+    const response = await fetch('/auth', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ idToken , csrfToken})
-    })
+      body: JSON.stringify({ idToken, csrfToken }),
+    });
+  
+    if (response.ok) {
+      window.location.href = '/';
+    }
 
-    window.location.href = "/"
+    else {
+      const data = await response.json()
+      throw new Error(data.error)
+    }
   }
-
-  catch(err){
-    alert(err.message, 'Error Authenticating User...Try Again')
-  }
+  
+  catch (err) {
+    const snackbar = new Snackbar(err.message,'error',snackbarElement)
+    snackbar.show()
+    
+    setTimeout(() => {
+      snackbar.clear()
+    },5000)
+  }  
 }
 
 export async function handleSignOut(){

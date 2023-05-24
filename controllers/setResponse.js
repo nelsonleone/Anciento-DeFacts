@@ -24,13 +24,12 @@ const getSignOut = async(req,res) => {
 async function handleCreateSessionCookie(req,res,next){
   const idToken = req.body.idToken?.toString()
   const csrfToken = req.body.csrfToken?.toString()
-
-  if (csrfToken !== req.cookies.csrfToken) {
-    res.status(401).send('UNAUTHORIZED REQUEST!')
-    return;
-  }
-
+  
   try{
+    
+    if (csrfToken !== req.cookies.csrfToken) {
+      throw new Error('UNAUTHORIZED REQUEST!')
+    }
     const expiresIn = 60 * 60 * 24 * 3 * 1000;
 
     const sessionCookie = await admin.auth().createSessionCookie(idToken, { expiresIn })
@@ -43,7 +42,7 @@ async function handleCreateSessionCookie(req,res,next){
   }
 
   catch(err){
-    res.status(401).send('UNAUTHORIZED REQUEST!')
+    res.status(401).json({error:'UNAUTHORIZED REQUEST!'})
   }
 }
 
@@ -103,6 +102,9 @@ const fetchFacts = async (authSessionCookie,limit=10) => {
   }
 }
 
+
+
+
 const getUpdatedComments = async(req,res) => {
   const factId = req.query.factId;
 
@@ -117,12 +119,18 @@ const getUpdatedComments = async(req,res) => {
   }
 }
 
+
+
+
+
 const getUpdatedLikesCount = async(req,res) => {
   const factId = req.query.factId;
+  const authSessionCookie = req.cookies.authSession || '';
   
   try{
     const fact = await Fact.findOne({ _id: factId }).populate('contributor comments.commentedBy')
     const likesArray = fact.likes;
+    res.locals.facts = await fetchFacts(authSessionCookie,50)
     res.status(201).json(likesArray.length)
   }
 
@@ -132,16 +140,53 @@ const getUpdatedLikesCount = async(req,res) => {
 }
 
 
-const getMoreFacts = async (req,res,next) => {
-  const count = req.query.count;
-  try{
-    const fetchedFacts = Fact.find().sort({ likes: -1 }).limit(count ? count * 10 : 10).populate('contributor comments.commentedBy')
-    res.json(fetchedFacts)
-  }
 
-  catch(err){
-    res.redirect('/facts')
+
+
+const getSearchedFacts = async (req,res,next) => {
+  const searchValue = req.query.name;
+  const regex = new RegExp(searchValue, 'i')
+  const authSessionCookie = req.cookies.authSession;
+
+  
+  try {
+    if (!authSessionCookie) {
+      throw new Error("Unauthorized user")
+    }
+  
+    const searchedFactsResult = await Fact.find({
+      $or: [
+        { title: { $regex: regex } },
+        { "contributor.name": { $regex: regex } }
+      ]
+    }).populate('contributor comments.commentedBy')
+  
+    if (searchedFactsResult.length) {
+      const modifiedSearchedFactsResult = searchedFactsResult.map(value => {
+        const { repImageType, _id, repImageDataString, contributor, body, title, comments, createdAt, likes } = value;
+
+        return {
+          title,
+          body,
+          comments,
+          createdAt,
+          likes,
+          _id,
+          contributor,
+          repImageSrcPath: `data:${value.repImageType};charset=utf-8;base64,${value.repImageDataString.toString('base64')}`
+        }
+      })     
+      
+      res.status(200).json(modifiedSearchedFactsResult)
+    } else {
+      const facts = fetchFacts(authSessionCookie, 50)
+    }
+  } 
+
+  catch (err) {
+    res.status(500).json({ error: err.message })
   }
+  
 }
 
 
@@ -168,9 +213,9 @@ module.exports = {
   handleCreateSessionCookie,
   getSignOut,
   handleNewFactPost,
-  getMoreFacts,
   fetchFacts,
   renderDynamicRoutes,
   getUpdatedComments,
-  getUpdatedLikesCount
+  getUpdatedLikesCount,
+  getSearchedFacts
 }

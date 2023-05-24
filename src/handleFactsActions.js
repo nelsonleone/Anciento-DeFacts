@@ -1,72 +1,52 @@
-import { snackbarElement ,renderUpdatedLikesCount,  loaderElement, renderUpdatedComments} from './script.js';
+import { snackbarElement , renderUpdatedLikesCount,  loaderElement, renderUpdatedComments, renderFacts} from './script.js';
 import { Snackbar } from './Snackbar.js';
 import { Loader } from './Loader.js'
-
-
-export async function postNewFact(formData){
-
-  try{
-    await fetch('/facts',{
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: formData
-    })
-  }
-
-  catch(err){
-    console.log(err.message)
-    const snackbar = new Snackbar(err.message,'error',snackbarElement)
-    snackbar.show()
- 
-    setTimeout(() => {
-      snackbar.clear()
-     },5000)
-  }
-}
 
 export async function interactWithFact(userId,factId){
 
   const loader = new Loader(loaderElement)
   loader.load()
 
-  try{
-    const res = await fetch(`/facts/likeFact`,{
+  try {
+    const res = await fetch(`/facts/likeFact`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         userId,
-        factId
-      })
-    })
-
-    const resLikeCountFetch = await fetch(`/facts/likes?factId=${factId}`)
-    const updatedLikesCount = await resLikeCountFetch.json()
-    await renderUpdatedLikesCount(updatedLikesCount)
-
-    const snackbar = new Snackbar("Fact Liked",'error',snackbarElement)
+        factId,
+      }),
+    });
+  
+    if (res.ok) {
+      const resLikeCountFetch = await fetch(`/facts/likes?factId=${factId}`)
+      const updatedLikesCount = await resLikeCountFetch.json()
+      await renderUpdatedLikesCount(updatedLikesCount)
+  
+      const snackbar = new Snackbar('Interaction Sent', 'success', snackbarElement)
+      snackbar.show()
+  
+      setTimeout(() => {
+        snackbar.clear()
+      }, 3000)
+    } else {
+      throw new Error('Error Liking Fact')
+    }
+  } 
+  
+  catch (err) {
+    const snackbar = new Snackbar(err.message, 'error', snackbarElement)
     snackbar.show()
- 
+  
     setTimeout(() => {
       snackbar.clear()
-    },3000)
-  }
+    }, 3000)
+  } 
   
-  catch(err){
-    const snackbar = new Snackbar("Error Liking Fact",'error',snackbarElement)
-   snackbar.show()
-
-   setTimeout(() => {
-     snackbar.clear()
-    },3000)
-  }
-  
-  finally{
+  finally {
     loader.stop()
-  }
+  }  
 }
 
 
@@ -78,6 +58,7 @@ export async function interactWithFact(userId,factId){
 export async function commentOnFact(factId,userId,comment){
   
   let success = false;
+  let errorMessage = "";
   const loader = new Loader(loaderElement)
   loader.load()
 
@@ -102,13 +83,8 @@ export async function commentOnFact(factId,userId,comment){
   }
 
   catch(err){
-    console.log(err)
-    const snackbar = new Snackbar(err.message,'error',snackbarElement)
-    snackbar.show()
-
-    setTimeout(() =>{
-      snackbar.clear()
-    },3000)
+    success = false;
+    errorMessage = err.message;
   }
 
 
@@ -123,5 +99,48 @@ export async function commentOnFact(factId,userId,comment){
         snackbar.clear()
       },3000)
     }
+    else if(!success){
+      const snackbar = new Snackbar(errorMessage,'error',snackbarElement)
+      snackbar.show()
+
+      setTimeout(() =>{
+        snackbar.clear()
+      },3000)
+    }
   }
+}
+
+
+
+export async function getSearchedFacts(searchValue){
+
+  const loader = new Loader(loaderElement)
+  loader.load()
+
+  fetch(`/facts/search?name=${searchValue}`)
+  .then(response => {
+    if(response.ok){
+      return response.json()
+    }
+    else {
+      return response.json().then(data => {
+        throw new Error(data.error)
+    })
+    }
+  })
+  .then(data => {
+    loader.stop()
+    const searchedFactsResult = data;
+    renderFacts(searchedFactsResult)
+  })
+
+  .catch(error => {
+    loader.stop()
+    const snackbar = new Snackbar(error.message,'error',snackbarElement)
+    snackbar.show()
+    
+    setTimeout(() => {
+      snackbar.clear()
+    },5000)
+  })
 }

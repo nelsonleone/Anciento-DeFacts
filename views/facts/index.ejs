@@ -5,10 +5,13 @@
    
    <div class="search-input-container">
       <span id="search-label" class="AT_only">Search For A Fact Using A Contributor's email or name</span>
-      <input class="search-facts" name="facts-search" aria-label="search-label" type="text" placeholder="Search" />
+      <form class="search-facts-form">
+         <input class="search-facts" name="search-input" aria-label="search-label" type="text" placeholder="Search" />
+         <button type="submit">Search</button>
+      </form>
    </div>
 
-   <main>
+   <main id="facts-container">
       <% if (facts.length > 0) { %>
          <% facts.forEach(fact => { %>
             <div class="fact" tabindex="0" aria-label="Fact" aria-labelledby="<%= fact._id %>">

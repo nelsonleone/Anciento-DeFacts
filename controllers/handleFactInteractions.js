@@ -1,35 +1,37 @@
 const { default: mongoose } = require('mongoose')
 const CustomError = require('./CustomError')
-const Fact = require('../models/Fact')
+const Fact = require('../models/Fact');
+const { fetchFacts } = require('./setResponse');
 
 async function handleFactsLikes(req,res,next){
    const factId = req.body.factId;
    const userId = req.body.userId;
+   const authSessionCookie = req.cookies.authSession || '';
 
    if(!factId || !userId){
      throw new CustomError(500,"Empty Query Parameter Passed")
    }
 
-   try {
-      const fact = await Fact.findById(factId)
+  try {
+    const fact = await Fact.findById(factId)
 
-      if (fact.likes.includes(userId)) {
-        await fact.updateOne({ $pull: { likes: userId } })
-        res.locals.facts = updatedFactsData()
-        res.status(201).send("Fact Unliked")
-      } else {        
-        await fact.updateOne({ $push: { likes: userId } })
-        res.status(201).send("Fact Liked")
-      } 
-   }
+    if (fact.likes.includes(userId)) {
+      await fact.updateOne({ $pull: { likes: userId } })
+      res.locals.facts = fetchFacts(authSessionCookie,50)
+      res.status(201).send("Fact Unliked")
+    } else {        
+      await fact.updateOne({ $push: { likes: userId } })
+      res.status(201).send("Fact Liked")
+    } 
+  }
 
-   catch (error) {
-      if (error instanceof mongoose.Error.CastError) {
-        res.status(400).send(error.message)
-      } else {
-        res.status(error.code || 500).send(error.message)
-      }
-   }
+  catch (error) {
+    if (error instanceof mongoose.Error.CastError) {
+      res.status(400).send(error.message)
+    } else {
+      res.status(error.statusCode || 500).send(error.message)
+    }
+  }
 }
 
 
