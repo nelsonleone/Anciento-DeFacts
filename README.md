@@ -7,6 +7,7 @@ A NodeJs and Express powered Fact Posting App
 - EJS templates
 - Plain CSS 
 - Firebase
+- MongoDB (with an ODM ...*mongoose*)
 - Filepond
 
 # Screenshots
